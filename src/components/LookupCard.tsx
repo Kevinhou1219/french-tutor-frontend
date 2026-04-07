@@ -1,25 +1,27 @@
 import { useState } from 'react'
 import styles from './LookupCard.module.css'
 
-interface Props {
+interface Props<T> {
   title: string
   subtitle: string
   placeholder: string
   buttonLabel: string
   accentColor: string
-  onSubmit: (value: string) => Promise<unknown>
+  onSubmit: (value: string) => Promise<T>
+  renderResult: (result: T) => React.ReactNode
 }
 
-export default function LookupCard({
+export default function LookupCard<T>({
   title,
   subtitle,
   placeholder,
   buttonLabel,
   accentColor,
   onSubmit,
-}: Props) {
+  renderResult,
+}: Props<T>) {
   const [input, setInput] = useState('')
-  const [result, setResult] = useState<unknown>(null)
+  const [result, setResult] = useState<T | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -79,14 +81,7 @@ export default function LookupCard({
         </div>
       )}
 
-      {result != null && !error && (
-        <div className={styles.result}>
-          <h3 className={styles.resultLabel}>Result</h3>
-          <pre className={styles.resultPre}>
-            {JSON.stringify(result, null, 2)}
-          </pre>
-        </div>
-      )}
+      {result != null && !error && renderResult(result)}
     </div>
   )
 }

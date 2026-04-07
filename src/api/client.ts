@@ -16,11 +16,18 @@ async function post<T>(path: string, body: Record<string, string>): Promise<T> {
 }
 
 export interface WordResult {
-  [key: string]: unknown
+  translation: string
+  conjugations: string[] | null
+  synonyms: string[] | null
+  common_phrases: string[] | null
+  example_sentence: string
 }
 
 export interface SentenceResult {
-  [key: string]: unknown
+  translation: string
+  tense: string
+  grammar_points: string | null
+  idiomatic_expressions: string | null
 }
 
 export const api = {

@@ -1,5 +1,7 @@
 import { api } from './api/client'
 import LookupCard from './components/LookupCard'
+import WordResultView from './components/WordResultView'
+import SentenceResultView from './components/SentenceResultView'
 import styles from './App.module.css'
 
 export default function App() {
@@ -8,9 +10,9 @@ export default function App() {
       <header className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.flag} aria-hidden="true">🇫🇷</div>
-          <h1 className={styles.heroTitle}>Kevin's French Tutor</h1>
+          <h1 className={styles.heroTitle}>Kev's French Tutor</h1>
           <p className={styles.heroSubtitle}>
-            Look up French words and sentences instantly — powered by AI.
+            No, I am not a dictionary...<br />I can explain things to provide a smooth learning experience. Think of me as your reading companion? 
           </p>
         </div>
       </header>
@@ -19,25 +21,27 @@ export default function App() {
         <div className={styles.grid}>
           <LookupCard
             title="Word Lookup"
-            subtitle="Enter a French word to get its meaning, usage, and examples."
+            subtitle="Enter a word in French"
             placeholder="e.g. bonjour"
             buttonLabel="Look up"
             accentColor="#2563eb"
             onSubmit={(word) => api.lookupWord(word)}
+            renderResult={(result) => <WordResultView result={result} />}
           />
           <LookupCard
             title="Sentence Lookup"
-            subtitle="Enter a French sentence to get a translation and breakdown."
+            subtitle="Enter a sentence in French"
             placeholder="e.g. Comment vous appelez-vous ?"
             buttonLabel="Translate"
             accentColor="#4f46e5"
             onSubmit={(sentence) => api.lookupSentence(sentence)}
+            renderResult={(result) => <SentenceResultView result={result} />}
           />
         </div>
       </main>
 
       <footer className={styles.footer}>
-        <p>Built with ❤️ for learning French</p>
+        <p>Hey, I'm your AI French tutor who's always on call. What is your excuse to procrastinate now?</p>
       </footer>
     </div>
   )
