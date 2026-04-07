@@ -41,7 +41,7 @@ export default function App() {
             placeholder="e.g. bonjour"
             buttonLabel="Look up"
             accentColor="#2563eb"
-            onSubmit={(word) => api.lookupWord(word)}
+            onSubmit={(word) => api.lookupWord(word, userId)}
             renderResult={(result) => <WordResultView result={result} />}
           />
           <LookupCard
@@ -50,7 +50,7 @@ export default function App() {
             placeholder="e.g. Comment vous appelez-vous ?"
             buttonLabel="Translate"
             accentColor="#4f46e5"
-            onSubmit={(sentence) => api.lookupSentence(sentence)}
+            onSubmit={(sentence) => api.lookupSentence(sentence, userId)}
             renderResult={(result) => <SentenceResultView result={result} />}
           />
         </div>

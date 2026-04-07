@@ -31,9 +31,9 @@ export interface SentenceResult {
 }
 
 export const api = {
-  lookupWord: (word: string) =>
-    post<WordResult>('/word', { word }),
+  lookupWord: (word: string, userId: string) =>
+    post<WordResult>('/word', { word, user_id: userId }),
 
-  lookupSentence: (sentence: string) =>
-    post<SentenceResult>('/sentence', { sentence }),
+  lookupSentence: (sentence: string, userId: string) =>
+    post<SentenceResult>('/sentence', { sentence, user_id: userId }),
 }
