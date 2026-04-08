@@ -34,6 +34,19 @@ export interface QAResult {
   answer: string
 }
 
+export interface DashboardResult {
+  word_seeds: number
+  sentence_seeds: number
+  total_seeds: number
+  word_water: number
+  sentence_water: number
+  total_water: number
+  word_flowers: number
+  sentence_flowers: number
+  total_flowers: number
+  oldest_seed_days: number | null
+}
+
 export const api = {
   lookupWord: (word: string, userId: string) =>
     post<WordResult>('/word', { word, user_id: userId }),
@@ -43,4 +56,7 @@ export const api = {
 
   askQuestion: (question: string) =>
     post<QAResult>('/qa', { question }),
+
+  getDashboard: (userId: string) =>
+    post<DashboardResult>('/dashboard', { user_id: userId }),
 }

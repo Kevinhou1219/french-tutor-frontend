@@ -4,6 +4,7 @@ import LookupCard from './components/LookupCard'
 import WordResultView from './components/WordResultView'
 import SentenceResultView from './components/SentenceResultView'
 import QACard from './components/QACard'
+import MyGarden from './components/MyGarden'
 import SignIn from './components/SignIn'
 import styles from './App.module.css'
 
@@ -53,6 +54,9 @@ export default function App() {
       </header>
 
       <main className={styles.main}>
+        <div className={styles.gardenSection}>
+          <MyGarden userId={userId} />
+        </div>
         <div className={styles.grid}>
           <LookupCard
             title="Word Lookup"

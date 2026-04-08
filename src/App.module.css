@@ -183,6 +183,10 @@
   .gardenScene span:nth-child(3) { font-size: 2.6rem; }
 }
 
+.gardenSection {
+  margin-bottom: 1.5rem;
+}
+
 .qaSection {
   margin-top: 1.5rem;
 }
