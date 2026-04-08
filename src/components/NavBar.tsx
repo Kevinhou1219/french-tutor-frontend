@@ -15,11 +15,18 @@ export default function NavBar() {
           🌱 My Garden
         </NavLink>
         <NavLink
+          to="/seed-shop"
+          className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+          onClick={() => sounds.click.play()}
+        >
+          🌿 My Seed Shop
+        </NavLink>
+        <NavLink
           to="/medals"
           className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
           onClick={() => sounds.click.play()}
         >
-          🏅 Medals
+          🏅 My Trophy Shelf
         </NavLink>
       </div>
     </nav>

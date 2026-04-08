@@ -1,8 +1,3 @@
-import { api } from '../api/client'
-import LookupCard from '../components/LookupCard'
-import WordResultView from '../components/WordResultView'
-import SentenceResultView from '../components/SentenceResultView'
-import QACard from '../components/QACard'
 import MyGarden from '../components/MyGarden'
 import Activity from '../components/Activity'
 import WaterPlants from '../components/WaterPlants'
@@ -48,29 +43,6 @@ export default function GardenPage({ userId }: Props) {
         <MyGarden userId={userId} />
         <Activity userId={userId} />
         <WaterPlants userId={userId} />
-        <div className={styles.grid}>
-          <LookupCard
-            title="Word Lookup 🌱"
-            subtitle="Drop in a French word to plant a seed"
-            placeholder="e.g. bonjour"
-            buttonLabel="Look up"
-            accentColor="#16a34a"
-            maxInputLength={30}
-            onSubmit={(word) => api.lookupWord(word, userId)}
-            renderResult={(result) => <WordResultView result={result} />}
-          />
-          <LookupCard
-            title="Sentence Lookup 🌱"
-            subtitle="Drop in a French sentence to plant a seed"
-            placeholder="e.g. Comment vous appelez-vous ?"
-            buttonLabel="Translate"
-            accentColor="#0f766e"
-            maxInputLength={300}
-            onSubmit={(sentence) => api.lookupSentence(sentence, userId)}
-            renderResult={(result) => <SentenceResultView result={result} />}
-          />
-        </div>
-        <QACard />
       </main>
 
       <footer className={styles.footer}>
