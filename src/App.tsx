@@ -3,6 +3,7 @@ import { api } from './api/client'
 import LookupCard from './components/LookupCard'
 import WordResultView from './components/WordResultView'
 import SentenceResultView from './components/SentenceResultView'
+import QACard from './components/QACard'
 import SignIn from './components/SignIn'
 import styles from './App.module.css'
 
@@ -53,6 +54,9 @@ export default function App() {
             onSubmit={(sentence) => api.lookupSentence(sentence, userId)}
             renderResult={(result) => <SentenceResultView result={result} />}
           />
+        </div>
+        <div className={styles.qaSection}>
+          <QACard />
         </div>
       </main>
 

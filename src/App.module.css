@@ -90,6 +90,10 @@
   }
 }
 
+.qaSection {
+  margin-top: 1.5rem;
+}
+
 /* ── Footer ───────────────────────────────────────────── */
 .footer {
   text-align: center;

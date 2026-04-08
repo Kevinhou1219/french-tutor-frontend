@@ -30,10 +30,17 @@ export interface SentenceResult {
   idiomatic_expressions: string | null
 }
 
+export interface QAResult {
+  answer: string
+}
+
 export const api = {
   lookupWord: (word: string, userId: string) =>
     post<WordResult>('/word', { word, user_id: userId }),
 
   lookupSentence: (sentence: string, userId: string) =>
     post<SentenceResult>('/sentence', { sentence, user_id: userId }),
+
+  askQuestion: (question: string) =>
+    post<QAResult>('/qa', { question }),
 }
