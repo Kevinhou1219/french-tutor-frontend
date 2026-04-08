@@ -5,6 +5,7 @@ import WordResultView from './components/WordResultView'
 import SentenceResultView from './components/SentenceResultView'
 import QACard from './components/QACard'
 import MyGarden from './components/MyGarden'
+import Activity from './components/Activity'
 import WaterPlants from './components/WaterPlants'
 import SignIn from './components/SignIn'
 import styles from './App.module.css'
@@ -56,6 +57,7 @@ export default function App() {
 
       <main className={styles.main}>
         <MyGarden userId={userId} />
+        <Activity userId={userId} />
         <WaterPlants userId={userId} />
         <div className={styles.grid}>
           <LookupCard

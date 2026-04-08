@@ -60,6 +60,11 @@ export interface DashboardResult {
   oldest_seed_days: number | null
 }
 
+export interface ActivityResult {
+  created: number[]
+  mastered: number[]
+}
+
 export interface ReviewResult {
   id: number
   content: string
@@ -81,6 +86,9 @@ export const api = {
 
   getDashboard: (userId: string) =>
     post<DashboardResult>('/dashboard', { user_id: userId }),
+
+  getActivity: (userId: string) =>
+    post<ActivityResult>('/activity', { user_id: userId }),
 
   reviewItem: (userId: string, mode: 'random' | 'oldest') =>
     post<ReviewResult>('/review_item', { user_id: userId, mode }),
