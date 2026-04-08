@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import styles from './NavBar.module.css'
+import { sounds } from '../sounds'
 
 export default function NavBar() {
   return (
@@ -9,12 +10,14 @@ export default function NavBar() {
           to="/"
           end
           className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+          onClick={() => sounds.click.play()}
         >
           🌱 My Garden
         </NavLink>
         <NavLink
           to="/medals"
           className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+          onClick={() => sounds.click.play()}
         >
           🏅 Medals
         </NavLink>

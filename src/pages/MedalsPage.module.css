@@ -2,8 +2,10 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: #f9fafb;
 }
 
+/* ── Hero ─────────────────────────────────────────────── */
 .hero {
   background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 60%, #3b82f6 100%);
   padding: 4rem 1.5rem 5rem;
@@ -16,7 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .greeting {
@@ -40,29 +42,213 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* ── Main ─────────────────────────────────────────────── */
 .main {
   flex: 1;
   max-width: 1100px;
   width: 100%;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem;
+  padding: 2.5rem 1.5rem 4rem;
   transform: translateY(-2rem);
-}
-
-.placeholder {
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  padding: 4rem 2rem;
-  text-align: center;
-  color: #6b7280;
-  font-size: 1.1rem;
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
+}
+
+.loading {
+  text-align: center;
+  color: #6b7280;
+  padding: 3rem;
+  font-size: 1rem;
+}
+
+.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── Category card ────────────────────────────────────── */
+.category {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.categoryHeader {
+  display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.placeholderIcon {
-  font-size: 3rem;
+.categoryIcon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.categoryMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.categoryTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.2rem;
+}
+
+.categoryDesc {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.categoryCount {
+  font-size: 1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── Medal slots row ──────────────────────────────────── */
+.slots {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.75rem;
+}
+
+/* ── Individual slot ──────────────────────────────────── */
+.slot {
+  border-radius: 10px;
+  padding: 0.9rem 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  text-align: center;
+  min-height: 130px;
+  justify-content: center;
+}
+
+.slotIcon {
+  font-size: 1.9rem;
+  line-height: 1;
+}
+
+.iconMuted {
+  filter: grayscale(1) opacity(0.35);
+}
+
+.slotTier {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: inherit;
+}
+
+.slotUnit {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: inherit;
+  opacity: 0.8;
+}
+
+/* Earned */
+.earned {
+  color: #ffffff;
+}
+
+.earnedBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 99px;
+  padding: 0.15rem 0.55rem;
+  margin-top: 0.2rem;
+  letter-spacing: 0.03em;
+}
+
+/* Next / in-progress */
+.next {
+  background: #f9fafb;
+  border: 2px dashed var(--accent);
+  color: #374151;
+  animation: pulseNext 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseNext {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 20%, transparent); }
+}
+
+.progressBar {
+  width: 100%;
+  height: 5px;
+  background: #e5e7eb;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 0.2rem;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.progressLabel {
+  font-size: 0.7rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* Locked */
+.locked {
+  background: #f3f4f6;
+  color: #9ca3af;
+}
+
+.lockIcon {
+  font-size: 0.85rem;
+  margin-top: 0.1rem;
+  filter: grayscale(1) opacity(0.5);
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 640px) {
+  .slots {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .categoryHeader {
+    flex-wrap: wrap;
+  }
+
+  .categoryCount {
+    width: 100%;
+    margin-left: 3rem;
+  }
+
+  .main {
+    transform: translateY(-1.5rem);
+    padding: 0 1rem 3rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
