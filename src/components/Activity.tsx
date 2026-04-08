@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { api, ActivityResult } from '../api/client'
 import styles from './Activity.module.css'
+import { sounds } from '../sounds'
 
 const POLL_INTERVAL = 60
 
@@ -57,7 +58,7 @@ export default function Activity({ userId }: Props) {
           </span>
           <button
             className={styles.refreshBtn}
-            onClick={fetchActivity}
+            onClick={() => { sounds.refresh.play(); fetchActivity() }}
             disabled={loading}
             aria-label="Refresh activity"
           >

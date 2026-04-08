@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { api, DashboardResult } from '../api/client'
 import styles from './MyGarden.module.css'
+import { sounds } from '../sounds'
 
 const POLL_INTERVAL = 60
 
@@ -59,7 +60,7 @@ export default function MyGarden({ userId }: Props) {
           </span>
           <button
             className={styles.refreshBtn}
-            onClick={fetchDashboard}
+            onClick={() => { sounds.refresh.play(); fetchDashboard() }}
             disabled={loading}
             aria-label="Refresh garden stats"
           >

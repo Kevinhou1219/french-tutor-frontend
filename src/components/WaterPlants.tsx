@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { api, ReviewResult } from '../api/client'
 import styles from './WaterPlants.module.css'
+import { sounds } from '../sounds'
 
 const REVIEW_TIMEOUT = 30
 
@@ -106,7 +107,7 @@ export default function WaterPlants({ userId }: Props) {
         <div className={styles.pickRow}>
           <button
             className={`${styles.pickBtn} ${styles.pickRandom}`}
-            onClick={() => startReview('random')}
+            onClick={() => { sounds.click.play(); startReview('random') }}
             disabled={loadingMode !== null}
           >
             {loadingMode === 'random'
@@ -115,7 +116,7 @@ export default function WaterPlants({ userId }: Props) {
           </button>
           <button
             className={`${styles.pickBtn} ${styles.pickOldest}`}
-            onClick={() => startReview('oldest')}
+            onClick={() => { sounds.click.play(); startReview('oldest') }}
             disabled={loadingMode !== null}
           >
             {loadingMode === 'oldest'
@@ -140,7 +141,7 @@ export default function WaterPlants({ userId }: Props) {
           <div className={styles.actions}>
             <button
               className={`${styles.actionBtn} ${styles.masteredBtn}`}
-              onClick={() => markItem('done')}
+              onClick={() => { sounds.mastered.play(); markItem('done') }}
               disabled={phase === 'marking'}
             >
               {phase === 'marking'
@@ -149,7 +150,7 @@ export default function WaterPlants({ userId }: Props) {
             </button>
             <button
               className={`${styles.actionBtn} ${styles.needMoreBtn}`}
-              onClick={() => markItem('not_done')}
+              onClick={() => { sounds.needWork.play(); markItem('not_done') }}
               disabled={phase === 'marking'}
             >
               {phase === 'marking'

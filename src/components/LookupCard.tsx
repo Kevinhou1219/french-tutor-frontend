@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styles from './LookupCard.module.css'
+import { sounds } from '../sounds'
 
 interface Props<T> {
   title: string
@@ -42,6 +43,7 @@ export default function LookupCard<T>({
       return
     }
 
+    sounds.lookup.play()
     setLoading(true)
     setError(null)
     setResult(null)

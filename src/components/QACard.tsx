@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { api } from '../api/client'
 import styles from './QACard.module.css'
+import { sounds } from '../sounds'
 
 export default function QACard() {
   const [question, setQuestion] = useState('')
@@ -19,6 +20,7 @@ export default function QACard() {
     const trimmed = question.trim()
     if (!trimmed) return
 
+    sounds.lookup.play()
     setLoading(true)
     setError(null)
     setAnswer(null)

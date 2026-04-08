@@ -1,6 +1,8 @@
 import { useState, FormEvent } from 'react'
 import styles from './SignIn.module.css'
 
+const enterGardenSound = new Audio('/sounds/enter_garden.mp3')
+
 interface SignInProps {
   onSignIn: (userId: string) => void
 }
@@ -38,6 +40,7 @@ export default function SignIn({ onSignIn }: SignInProps) {
       setError('User ID must be 30 characters or fewer.')
       return
     }
+    enterGardenSound.play()
     onSignIn(trimmed)
   }
 
