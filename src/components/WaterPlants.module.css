@@ -1,0 +1,261 @@
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  border: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Header ───────────────────────────────────────────── */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0369a1;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+  margin: 0;
+}
+
+/* ── Pick buttons ─────────────────────────────────────── */
+.pickRow {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 520px) {
+  .pickRow {
+    flex-direction: column;
+  }
+}
+
+.pickBtn {
+  flex: 1;
+  padding: 1rem 1.25rem;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.5rem;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.pickBtn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+.pickBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.pickBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pickRandom {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.pickOldest {
+  background: #fef9c3;
+  color: #a16207;
+}
+
+/* ── Review area ──────────────────────────────────────── */
+.reviewArea {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.itemMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.typeBadge {
+  padding: 0.25rem 0.75rem;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 99px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.metaChip {
+  padding: 0.25rem 0.75rem;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  border-radius: 99px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.content {
+  padding: 1.25rem 1.5rem;
+  background: var(--gray-50);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 14px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--gray-800);
+  line-height: 1.6;
+  min-height: 4rem;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Action buttons ───────────────────────────────────── */
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 520px) {
+  .actions {
+    flex-direction: column;
+  }
+}
+
+.actionBtn {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.actionBtn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.actionBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.actionBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.masteredBtn {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.needMoreBtn {
+  background: #ea580c;
+  color: #ffffff;
+}
+
+/* ── Countdown ────────────────────────────────────────── */
+.countdownArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.countdownBar {
+  width: 100%;
+  height: 4px;
+  background: var(--gray-200);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.countdownFill {
+  height: 100%;
+  background: #f97316;
+  border-radius: 99px;
+  transition: width 1s linear;
+}
+
+.countdownText {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Empty state ──────────────────────────────────────── */
+.emptyState {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: #fdf2f8;
+  border: 1.5px solid #fbcfe8;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  color: #9d174d;
+}
+
+.emptyState p {
+  margin: 0;
+}
+
+/* ── Error ────────────────────────────────────────────── */
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  background: var(--red-100);
+  color: var(--red-600);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.errorIcon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+/* ── Spinner ──────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  border: 2.5px solid rgba(0, 0, 0, 0.15);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

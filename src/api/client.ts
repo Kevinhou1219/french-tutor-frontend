@@ -1,6 +1,6 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
-async function post<T>(path: string, body: Record<string, string>): Promise<T> {
+async function post<T>(path: string, body: Record<string, unknown>): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -13,6 +13,19 @@ async function post<T>(path: string, body: Record<string, string>): Promise<T> {
   }
 
   return res.json() as Promise<T>
+}
+
+async function postVoid(path: string, body: Record<string, unknown>): Promise<void> {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '')
+    throw new Error(text || `Request failed: ${res.status} ${res.statusText}`)
+  }
 }
 
 export interface WordResult {
@@ -47,6 +60,15 @@ export interface DashboardResult {
   oldest_seed_days: number | null
 }
 
+export interface ReviewResult {
+  id: number
+  content: string
+  is_word: boolean
+  is_sentence: boolean
+  review_count: number
+  age: number
+}
+
 export const api = {
   lookupWord: (word: string, userId: string) =>
     post<WordResult>('/word', { word, user_id: userId }),
@@ -59,4 +81,10 @@ export const api = {
 
   getDashboard: (userId: string) =>
     post<DashboardResult>('/dashboard', { user_id: userId }),
+
+  reviewItem: (userId: string, mode: 'random' | 'oldest') =>
+    post<ReviewResult>('/review_item', { user_id: userId, mode }),
+
+  markItem: (userId: string, id: number, status: 'done' | 'not_done') =>
+    postVoid('/mark_item', { user_id: userId, id, status }),
 }

@@ -5,6 +5,7 @@ import WordResultView from './components/WordResultView'
 import SentenceResultView from './components/SentenceResultView'
 import QACard from './components/QACard'
 import MyGarden from './components/MyGarden'
+import WaterPlants from './components/WaterPlants'
 import SignIn from './components/SignIn'
 import styles from './App.module.css'
 
@@ -59,8 +60,8 @@ export default function App() {
         </div>
         <div className={styles.grid}>
           <LookupCard
-            title="Word Lookup"
-            subtitle="Drop in a French word to plant a seed 🌱"
+            title="Word Lookup 🌱"
+            subtitle="Drop in a French word to plant a seed"
             placeholder="e.g. bonjour"
             buttonLabel="Look up"
             accentColor="#16a34a"
@@ -68,14 +69,17 @@ export default function App() {
             renderResult={(result) => <WordResultView result={result} />}
           />
           <LookupCard
-            title="Sentence Lookup"
-            subtitle="Drop in a French sentence to plant a seed 🌱"
+            title="Sentence Lookup 🌱"
+            subtitle="Drop in a French sentence to plant a seed"
             placeholder="e.g. Comment vous appelez-vous ?"
             buttonLabel="Translate"
             accentColor="#0f766e"
             onSubmit={(sentence) => api.lookupSentence(sentence, userId)}
             renderResult={(result) => <SentenceResultView result={result} />}
           />
+        </div>
+        <div className={styles.qaSection}>
+          <WaterPlants userId={userId} />
         </div>
         <div className={styles.qaSection}>
           <QACard />
