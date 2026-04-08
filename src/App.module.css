@@ -6,7 +6,7 @@
 
 /* ── Hero ─────────────────────────────────────────────── */
 .hero {
-  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 45%, #4f46e5 100%);
+  background: linear-gradient(135deg, #14532d 0%, #166534 45%, #15803d 100%);
   padding: 4rem 1.5rem 5rem;
   position: relative;
   overflow: hidden;
@@ -18,7 +18,7 @@
   inset: 0;
   background:
     radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(99,102,241,0.3) 0%, transparent 50%);
+    radial-gradient(ellipse at 80% 20%, rgba(134,239,172,0.2) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -34,10 +34,17 @@
 }
 
 .flag {
-  font-size: 3.5rem;
-  line-height: 1;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+  display: flex;
+  width: 3.5rem;
+  height: 2.4rem;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
 }
+
+.flagBlue  { flex: 1; background: #002395; }
+.flagWhite { flex: 1; background: #ffffff; }
+.flagRed   { flex: 1; background: #ed2939; }
 
 .greeting {
   font-size: 1rem;
@@ -61,6 +68,86 @@
   color: rgba(255,255,255,0.8);
   max-width: 480px;
   line-height: 1.6;
+}
+
+/* ── Scattered deco elements ─────────────────────────── */
+.deco {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.6;
+  line-height: 1;
+  z-index: 1;
+}
+
+.decoFlower {
+  top: 14%;
+  left: 6%;
+  font-size: 2.4rem;
+  animation: decoFloat 4s ease-in-out infinite;
+}
+
+.decoBee {
+  top: 20%;
+  right: 8%;
+  font-size: 1.9rem;
+  animation: decoDrift 5s ease-in-out infinite;
+}
+
+.decoLeaf {
+  bottom: 22%;
+  left: 11%;
+  font-size: 2rem;
+  animation: decoFloat 3.5s ease-in-out infinite 0.7s;
+}
+
+.decoWatering {
+  bottom: 28%;
+  right: 7%;
+  font-size: 2.1rem;
+  animation: decoFloat 4.5s ease-in-out infinite 1.2s;
+}
+
+@keyframes decoFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+@keyframes decoDrift {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  33% { transform: translateX(10px) translateY(-7px); }
+  66% { transform: translateX(-5px) translateY(-12px); }
+}
+
+/* ── Garden scene strip ───────────────────────────────── */
+.gardenScene {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.3));
+  position: relative;
+  z-index: 2;
+}
+
+.gardenScene span {
+  display: inline-block;
+  line-height: 1;
+  animation: gardenFloat 3s ease-in-out infinite;
+}
+
+.gardenScene span:nth-child(1) { font-size: 1.4rem; animation-delay: 0s; }
+.gardenScene span:nth-child(2) { font-size: 2rem;   animation-delay: 0.35s; }
+.gardenScene span:nth-child(3) { font-size: 3.2rem; animation-delay: 0.1s; }
+.gardenScene span:nth-child(4) { font-size: 2.2rem; animation-delay: 0.55s; }
+.gardenScene span:nth-child(5) { font-size: 1.6rem; animation-delay: 0.8s; animation-name: decoDrift; }
+.gardenScene span:nth-child(6) { font-size: 2rem;   animation-delay: 0.4s; }
+.gardenScene span:nth-child(7) { font-size: 1.4rem; animation-delay: 0.65s; }
+.gardenScene span:nth-child(8) { font-size: 1.9rem; animation-delay: 0.2s; }
+
+@keyframes gardenFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 /* ── Main ─────────────────────────────────────────────── */
@@ -88,6 +175,12 @@
     transform: translateY(-1.5rem);
     padding: 0 1rem 2rem;
   }
+
+  .deco {
+    display: none;
+  }
+
+  .gardenScene span:nth-child(3) { font-size: 2.6rem; }
 }
 
 .qaSection {

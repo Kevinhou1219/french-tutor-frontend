@@ -28,7 +28,7 @@ export default function SignIn({ onSignIn }: SignInProps) {
       <div className={styles.card}>
         <div className={styles.flag} aria-hidden="true">🇫🇷</div>
         <h1 className={styles.heading}>Kev's French Tutor</h1>
-        <p className={styles.sub}>Enter your user ID to get started.</p>
+        <p className={styles.sub}>Enter your name to step into your garden.</p>
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label} htmlFor="userId">User ID</label>

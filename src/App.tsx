@@ -24,13 +24,31 @@ export default function App() {
   return (
     <div className={styles.page}>
       <header className={styles.hero}>
+        <span className={`${styles.deco} ${styles.decoFlower}`} aria-hidden="true">🌼</span>
+        <span className={`${styles.deco} ${styles.decoBee}`} aria-hidden="true">🐝</span>
+        <span className={`${styles.deco} ${styles.decoLeaf}`} aria-hidden="true">🍃</span>
+        <span className={`${styles.deco} ${styles.decoWatering}`} aria-hidden="true">🪣</span>
         <div className={styles.heroInner}>
-          <div className={styles.flag} aria-hidden="true">🇫🇷</div>
+          <div className={styles.flag} aria-hidden="true">
+            <div className={styles.flagBlue} />
+            <div className={styles.flagWhite} />
+            <div className={styles.flagRed} />
+          </div>
           <p className={styles.greeting}>Bonjour, {userId}!</p>
-          <h1 className={styles.heroTitle}>Kev's French Tutor</h1>
+          <h1 className={styles.heroTitle}>{userId}'s French Garden</h1>
           <p className={styles.heroSubtitle}>
-            No, I am not a dictionary...<br />I can explain things to provide a smooth learning experience. Think of me as your reading companion?
+            Every word you look up is a seed you plant 🌱 <br/>Water your plants regularly by reviewing the words.💧 <br/>Your French will flourish 🌸
           </p>
+          <div className={styles.gardenScene} aria-hidden="true">
+            <span>🌱</span>
+            <span>🌷</span>
+            <span>🧑‍🌾</span>
+            <span>🌻</span>
+            <span>🦋</span>
+            <span>🪴</span>
+            <span>🌿</span>
+            <span>🌸</span>
+          </div>
         </div>
       </header>
 
@@ -38,19 +56,19 @@ export default function App() {
         <div className={styles.grid}>
           <LookupCard
             title="Word Lookup"
-            subtitle="Enter a word in French"
+            subtitle="Drop in a French word to plant a seed 🌱"
             placeholder="e.g. bonjour"
             buttonLabel="Look up"
-            accentColor="#2563eb"
+            accentColor="#16a34a"
             onSubmit={(word) => api.lookupWord(word, userId)}
             renderResult={(result) => <WordResultView result={result} />}
           />
           <LookupCard
             title="Sentence Lookup"
-            subtitle="Enter a sentence in French"
+            subtitle="Drop in a French sentence to plant a seed 🌱"
             placeholder="e.g. Comment vous appelez-vous ?"
             buttonLabel="Translate"
-            accentColor="#4f46e5"
+            accentColor="#0f766e"
             onSubmit={(sentence) => api.lookupSentence(sentence, userId)}
             renderResult={(result) => <SentenceResultView result={result} />}
           />
@@ -61,7 +79,7 @@ export default function App() {
       </main>
 
       <footer className={styles.footer}>
-        <p>Hey, I'm your AI French tutor who's always on call. What is your excuse to procrastinate now?</p>
+        <p>🌸 « Avez-vous vraiment besoin d'une citation célèbre pour vous convaincre qu'apprendre le français est amusant ? » — Kevin, votre jardinier linguistique🌸</p>
       </footer>
     </div>
   )
