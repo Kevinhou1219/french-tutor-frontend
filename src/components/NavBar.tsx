@@ -28,6 +28,13 @@ export default function NavBar() {
         >
           🏅 My Trophy Shelf
         </NavLink>
+        <NavLink
+          to="/bloom-parade"
+          className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+          onClick={() => sounds.click.play()}
+        >
+          🌸 Bloom Parade
+        </NavLink>
       </div>
     </nav>
   )

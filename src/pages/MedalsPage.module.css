@@ -7,8 +7,8 @@
 
 /* ── Hero ─────────────────────────────────────────────── */
 .hero {
-  background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 60%, #3b82f6 100%);
-  padding: 4rem 1.5rem 5rem;
+  background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+  padding: 3rem 1.5rem 4rem;
 }
 
 .heroInner {
@@ -251,4 +251,14 @@
   .slots {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--gray-500);
+  font-size: 0.875rem;
+  border-top: 1px solid var(--gray-200);
+  background: var(--white);
 }

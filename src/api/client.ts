@@ -74,6 +74,16 @@ export interface ReviewResult {
   age: number
 }
 
+export interface InspectItem {
+  id: number
+  content: string
+  mastered_time: string
+}
+
+export interface InspectResponse {
+  items: InspectItem[]
+}
+
 export const api = {
   lookupWord: (word: string, userId: string) =>
     post<WordResult>('/word', { word, user_id: userId }),
@@ -95,4 +105,10 @@ export const api = {
 
   markItem: (userId: string, id: number, status: 'done' | 'not_done') =>
     postVoid('/mark_item', { user_id: userId, id, status }),
+
+  inspectWords: (userId: string) =>
+    post<InspectResponse>('/inspect', { user_id: userId }),
+
+  replantWord: (id: number) =>
+    postVoid('/replant', { id }),
 }

@@ -1,0 +1,214 @@
+/* ── Page shell ───────────────────────────────────────────────────── */
+.page {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 52px);
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+/* ── Hero header ──────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+  padding: 3rem 1.5rem 4rem;
+  flex-shrink: 0;
+}
+
+.heroInner {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.heroEyebrow {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.heroSubtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* ── Flying word cards ────────────────────────────────────────────── */
+.scene {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 400px;
+  background: #ffffff;
+}
+
+.card {
+  position: absolute;
+  /* start off-screen right; animation drives the horizontal travel */
+  left: 0;
+  background: #ffffff;
+  border: 2px solid #4caf50;
+  border-radius: 14px;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1b5e20;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  animation: flyAcross linear infinite;
+  transition: box-shadow 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation-play-state: paused;
+}
+
+/* Replanted state */
+.replanted {
+  background: #a5d6a7 !important;
+  border-color: #388e3c !important;
+  color: #1b5e20 !important;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.replantedBadge {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* Horizontal flight — left=0 as anchor; from off-screen right to off-screen left */
+@keyframes flyAcross {
+  from { transform: translateX(110vw); }
+  to   { transform: translateX(-55vw); }
+}
+
+/* ── Bear ─────────────────────────────────────────────────────────── */
+.bear {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 220px;
+  height: auto;
+  z-index: 20;
+  pointer-events: none;
+  user-select: none;
+  animation: bearBob 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes bearBob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* ── Hint label ───────────────────────────────────────────────────── */
+.hint {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.35);
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ── Toast ────────────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2e7d32;
+  color: #ffffff;
+  padding: 14px 30px;
+  border-radius: 32px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
+  z-index: 200;
+  animation: toastPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+
+@keyframes toastPop {
+  from { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(0.9); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1);   }
+}
+
+/* ── Too-few state ────────────────────────────────────────────────── */
+.tooFewScene {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 3rem 2rem;
+}
+
+.sadBear {
+  width: 160px;
+  height: auto;
+  margin-top: 2rem;
+  animation: sadSway 3s ease-in-out infinite;
+}
+
+@keyframes sadSway {
+  0%, 100% { transform: rotate(-6deg); }
+  50%       { transform: rotate(6deg); }
+}
+
+.tooFewText {
+  font-size: 19px;
+  color: #2e7d32;
+  text-align: center;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--gray-500);
+  font-size: 0.875rem;
+  border-top: 1px solid var(--gray-200);
+  background: var(--white);
+}
+
+/* ── Misc ─────────────────────────────────────────────────────────── */
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #555;
+}

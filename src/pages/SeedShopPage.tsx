@@ -16,7 +16,7 @@ export default function SeedShopPage({ userId }: Props) {
         <div className={styles.heroInner}>
           <p className={styles.greeting}>Bonjour, {userId}!</p>
           <h1 className={styles.title}>🌿 My Seed Shop</h1>
-          <p className={styles.subtitle}>Look up words and sentences to plant new seeds, or ask your gardener anything</p>
+          <p className={styles.subtitle}>Look up words and sentences to plant new seeds</p>
         </div>
       </header>
 
@@ -45,6 +45,10 @@ export default function SeedShopPage({ userId }: Props) {
         </div>
         <QACard />
       </main>
+
+      <footer className={styles.footer}>
+        <p>🌸 « Avez-vous vraiment besoin d'une citation célèbre pour vous convaincre qu'apprendre le français est amusant ? » — Kevin, votre jardinier linguistique🌸</p>
+      </footer>
     </div>
   )
 }

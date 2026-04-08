@@ -201,6 +201,10 @@ export default function MedalsPage({ userId }: Props) {
           <MedalCategory key={cat.title} category={cat} />
         ))}
       </main>
+
+      <footer className={styles.footer}>
+        <p>🌸 « Avez-vous vraiment besoin d'une citation célèbre pour vous convaincre qu'apprendre le français est amusant ? » — Kevin, votre jardinier linguistique🌸</p>
+      </footer>
     </div>
   )
 }

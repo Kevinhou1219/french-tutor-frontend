@@ -5,6 +5,7 @@ import NavBar from './components/NavBar'
 import GardenPage from './pages/GardenPage'
 import SeedShopPage from './pages/SeedShopPage'
 import MedalsPage from './pages/MedalsPage'
+import MasteredWordsPage from './pages/MasteredWordsPage'
 
 export default function App() {
   const [userId, setUserId] = useState<string | null>(
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/" element={<GardenPage userId={userId} />} />
         <Route path="/seed-shop" element={<SeedShopPage userId={userId} />} />
         <Route path="/medals" element={<MedalsPage userId={userId} />} />
+        <Route path="/bloom-parade" element={<MasteredWordsPage userId={userId} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
