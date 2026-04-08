@@ -158,6 +158,9 @@
   margin: 0 auto;
   padding: 2.5rem 1.5rem;
   transform: translateY(-2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .grid {
@@ -183,13 +186,6 @@
   .gardenScene span:nth-child(3) { font-size: 2.6rem; }
 }
 
-.gardenSection {
-  margin-bottom: 1.5rem;
-}
-
-.qaSection {
-  margin-top: 1.5rem;
-}
 
 /* ── Footer ───────────────────────────────────────────── */
 .footer {

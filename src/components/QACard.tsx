@@ -8,6 +8,12 @@ export default function QACard() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  function handleClear() {
+    setQuestion('')
+    setAnswer(null)
+    setError(null)
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     const trimmed = question.trim()
@@ -30,8 +36,15 @@ export default function QACard() {
   return (
     <div className={styles.card}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Ask Your Gardener 🧑‍🌾</h2>
-        <p className={styles.subtitle}>Ask anything about French — grammar, vocabulary, expressions, and more</p>
+        <div>
+          <h2 className={styles.title}>Ask Your Gardener 🧑‍🌾</h2>
+          <p className={styles.subtitle}>Ask anything about French — grammar, vocabulary, expressions, and more</p>
+        </div>
+        {(question.length > 0 || answer !== null || error !== null) && (
+          <button className={styles.clearBtn} type="button" onClick={handleClear}>
+            Clear
+          </button>
+        )}
       </div>
 
       <form className={styles.form} onSubmit={handleSubmit}>

@@ -34,6 +34,13 @@ export default function WaterPlants({ userId }: Props) {
     setError(null)
   }, [userId, item])
 
+  // Auto-dismiss the "no seeds" empty state after 5 seconds
+  useEffect(() => {
+    if (error !== '__empty__') return
+    const id = setTimeout(() => setError(null), 5000)
+    return () => clearTimeout(id)
+  }, [error])
+
   // Countdown tick while reviewing
   useEffect(() => {
     if (phase !== 'reviewing') return

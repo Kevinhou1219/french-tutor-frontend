@@ -7,6 +7,7 @@ interface Props<T> {
   placeholder: string
   buttonLabel: string
   accentColor: string
+  maxInputLength: number
   onSubmit: (value: string) => Promise<T>
   renderResult: (result: T) => React.ReactNode
 }
@@ -17,6 +18,7 @@ export default function LookupCard<T>({
   placeholder,
   buttonLabel,
   accentColor,
+  maxInputLength,
   onSubmit,
   renderResult,
 }: Props<T>) {
@@ -25,10 +27,20 @@ export default function LookupCard<T>({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  function handleClear() {
+    setInput('')
+    setResult(null)
+    setError(null)
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     const trimmed = input.trim()
     if (!trimmed) return
+    if (trimmed.length > maxInputLength) {
+      setError(`Input must be ${maxInputLength} characters or fewer.`)
+      return
+    }
 
     setLoading(true)
     setError(null)
@@ -47,31 +59,45 @@ export default function LookupCard<T>({
   return (
     <div className={styles.card} style={{ '--accent': accentColor } as React.CSSProperties}>
       <div className={styles.header}>
-        <h2 className={styles.title}>{title}</h2>
-        <p className={styles.subtitle}>{subtitle}</p>
+        <div>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.subtitle}>{subtitle}</p>
+        </div>
+        {(input.length > 0 || result !== null || error !== null) && (
+          <button className={styles.clearBtn} type="button" onClick={handleClear}>
+            Clear
+          </button>
+        )}
       </div>
 
       <form className={styles.form} onSubmit={handleSubmit}>
-        <input
-          className={styles.input}
-          type="text"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          placeholder={placeholder}
-          disabled={loading}
-          autoComplete="off"
-        />
-        <button
-          className={styles.button}
-          type="submit"
-          disabled={loading || !input.trim()}
-        >
-          {loading ? (
-            <span className={styles.spinner} aria-label="Loading" />
-          ) : (
-            buttonLabel
-          )}
-        </button>
+        {input.length > 0 && (
+          <p className={`${styles.charCount} ${input.length > maxInputLength ? styles.charCountOver : ''}`}>
+            {input.length} / {maxInputLength}
+          </p>
+        )}
+        <div className={styles.formRow}>
+          <input
+            className={styles.input}
+            type="text"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder={placeholder}
+            disabled={loading}
+            autoComplete="off"
+          />
+          <button
+            className={styles.button}
+            type="submit"
+            disabled={loading || !input.trim() || input.length > maxInputLength}
+          >
+            {loading ? (
+              <span className={styles.spinner} aria-label="Loading" />
+            ) : (
+              buttonLabel
+            )}
+          </button>
+        </div>
       </form>
 
       {error && (

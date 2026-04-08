@@ -55,9 +55,8 @@ export default function App() {
       </header>
 
       <main className={styles.main}>
-        <div className={styles.gardenSection}>
-          <MyGarden userId={userId} />
-        </div>
+        <MyGarden userId={userId} />
+        <WaterPlants userId={userId} />
         <div className={styles.grid}>
           <LookupCard
             title="Word Lookup 🌱"
@@ -65,6 +64,7 @@ export default function App() {
             placeholder="e.g. bonjour"
             buttonLabel="Look up"
             accentColor="#16a34a"
+            maxInputLength={30}
             onSubmit={(word) => api.lookupWord(word, userId)}
             renderResult={(result) => <WordResultView result={result} />}
           />
@@ -74,16 +74,12 @@ export default function App() {
             placeholder="e.g. Comment vous appelez-vous ?"
             buttonLabel="Translate"
             accentColor="#0f766e"
+            maxInputLength={300}
             onSubmit={(sentence) => api.lookupSentence(sentence, userId)}
             renderResult={(result) => <SentenceResultView result={result} />}
           />
         </div>
-        <div className={styles.qaSection}>
-          <WaterPlants userId={userId} />
-        </div>
-        <div className={styles.qaSection}>
-          <QACard />
-        </div>
+        <QACard />
       </main>
 
       <footer className={styles.footer}>
