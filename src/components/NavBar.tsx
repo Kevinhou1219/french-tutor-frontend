@@ -35,6 +35,13 @@ export default function NavBar() {
         >
           🌸 Bloom Parade
         </NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}
+          onClick={() => sounds.click.play()}
+        >
+          🧑‍🌾 About
+        </NavLink>
       </div>
     </nav>
   )
