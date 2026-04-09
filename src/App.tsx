@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { api } from './api/client'
+import { api, redirectToLogin } from './api/client'
 import NavBar from './components/NavBar'
 import GardenPage from './pages/GardenPage'
 import SeedShopPage from './pages/SeedShopPage'
@@ -15,7 +15,7 @@ export default function App() {
   useEffect(() => {
     api.getMe()
       .then(me => setUserName(me.name || me.user_id))
-      .catch(() => {})
+      .catch(() => redirectToLogin())
       .finally(() => setLoading(false))
   }, [])
 
