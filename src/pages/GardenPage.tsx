@@ -40,9 +40,9 @@ export default function GardenPage({ userId }: Props) {
       </header>
 
       <main className={styles.main}>
-        <MyGarden userId={userId} />
-        <Activity userId={userId} />
-        <WaterPlants userId={userId} />
+        <MyGarden />
+        <Activity />
+        <WaterPlants />
       </main>
 
       <footer className={styles.footer}>

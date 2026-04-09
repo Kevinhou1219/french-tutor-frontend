@@ -29,7 +29,7 @@ export default function SeedShopPage({ userId }: Props) {
             buttonLabel="Look up"
             accentColor="#16a34a"
             maxInputLength={30}
-            onSubmit={(word) => api.lookupWord(word, userId)}
+            onSubmit={(word) => api.lookupWord(word)}
             renderResult={(result) => <WordResultView result={result} />}
           />
           <LookupCard
@@ -39,7 +39,7 @@ export default function SeedShopPage({ userId }: Props) {
             buttonLabel="Translate"
             accentColor="#0f766e"
             maxInputLength={300}
-            onSubmit={(sentence) => api.lookupSentence(sentence, userId)}
+            onSubmit={(sentence) => api.lookupSentence(sentence)}
             renderResult={(result) => <SentenceResultView result={result} />}
           />
         </div>

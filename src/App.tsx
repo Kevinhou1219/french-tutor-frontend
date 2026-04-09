@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import SignIn from './components/SignIn'
+import { api } from './api/client'
 import NavBar from './components/NavBar'
 import GardenPage from './pages/GardenPage'
 import SeedShopPage from './pages/SeedShopPage'
@@ -9,27 +9,27 @@ import MasteredWordsPage from './pages/MasteredWordsPage'
 import AboutPage from './pages/AboutPage'
 
 export default function App() {
-  const [userId, setUserId] = useState<string | null>(
-    () => sessionStorage.getItem('userId')
-  )
+  const [userName, setUserName] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  function handleSignIn(id: string) {
-    sessionStorage.setItem('userId', id)
-    setUserId(id)
-  }
+  useEffect(() => {
+    api.getMe()
+      .then(me => setUserName(me.name || me.user_id))
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
 
-  if (!userId) {
-    return <SignIn onSignIn={handleSignIn} />
-  }
+  if (loading) return null
+  if (!userName) return null
 
   return (
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route path="/" element={<GardenPage userId={userId} />} />
-        <Route path="/seed-shop" element={<SeedShopPage userId={userId} />} />
-        <Route path="/medals" element={<MedalsPage userId={userId} />} />
-        <Route path="/bloom-parade" element={<MasteredWordsPage userId={userId} />} />
+        <Route path="/" element={<GardenPage userId={userName} />} />
+        <Route path="/seed-shop" element={<SeedShopPage userId={userName} />} />
+        <Route path="/medals" element={<MedalsPage userId={userName} />} />
+        <Route path="/bloom-parade" element={<MasteredWordsPage userId={userName} />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

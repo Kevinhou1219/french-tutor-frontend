@@ -5,11 +5,7 @@ import { sounds } from '../sounds'
 
 const POLL_INTERVAL = 60
 
-interface Props {
-  userId: string
-}
-
-export default function MyGarden({ userId }: Props) {
+export default function MyGarden() {
   const [data, setData] = useState<DashboardResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -22,14 +18,14 @@ export default function MyGarden({ userId }: Props) {
     countdownRef.current = POLL_INTERVAL
     setCountdown(POLL_INTERVAL)
     try {
-      const result = await api.getDashboard(userId)
+      const result = await api.getDashboard()
       setData(result)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load garden stats.')
     } finally {
       setLoading(false)
     }
-  }, [userId])
+  }, [])
 
   // Poll every POLL_INTERVAL seconds
   useEffect(() => {

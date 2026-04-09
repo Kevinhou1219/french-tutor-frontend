@@ -1,11 +1,22 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
+const FRONTEND_URL = 'https://icy-ocean-093948e10.7.azurestaticapps.net'
+
+function redirectToLogin() {
+  window.location.href = `${BASE_URL}/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(FRONTEND_URL)}`
+}
 
 async function post<T>(path: string, body: Record<string, unknown>): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(body),
   })
+
+  if (res.status === 401) {
+    redirectToLogin()
+    return new Promise(() => {})
+  }
 
   if (!res.ok) {
     const text = await res.text().catch(() => '')
@@ -19,13 +30,24 @@ async function postVoid(path: string, body: Record<string, unknown>): Promise<vo
   const res = await fetch(`${BASE_URL}${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(body),
   })
+
+  if (res.status === 401) {
+    redirectToLogin()
+    return new Promise(() => {})
+  }
 
   if (!res.ok) {
     const text = await res.text().catch(() => '')
     throw new Error(text || `Request failed: ${res.status} ${res.statusText}`)
   }
+}
+
+export interface MeResult {
+  user_id: string
+  name: string
 }
 
 export interface WordResult {
@@ -85,29 +107,39 @@ export interface InspectResponse {
 }
 
 export const api = {
-  lookupWord: (word: string, userId: string) =>
-    post<WordResult>('/word', { word, user_id: userId }),
+  getMe: (): Promise<MeResult> =>
+    fetch(`${BASE_URL}/me`, { credentials: 'include' }).then(res => {
+      if (res.status === 401) {
+        redirectToLogin()
+        return new Promise<MeResult>(() => {})
+      }
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+      return res.json() as Promise<MeResult>
+    }),
 
-  lookupSentence: (sentence: string, userId: string) =>
-    post<SentenceResult>('/sentence', { sentence, user_id: userId }),
+  lookupWord: (word: string) =>
+    post<WordResult>('/word', { word }),
+
+  lookupSentence: (sentence: string) =>
+    post<SentenceResult>('/sentence', { sentence }),
 
   askQuestion: (question: string) =>
     post<QAResult>('/qa', { question }),
 
-  getDashboard: (userId: string) =>
-    post<DashboardResult>('/dashboard', { user_id: userId }),
+  getDashboard: () =>
+    post<DashboardResult>('/dashboard', {}),
 
-  getActivity: (userId: string) =>
-    post<ActivityResult>('/activity', { user_id: userId }),
+  getActivity: () =>
+    post<ActivityResult>('/activity', {}),
 
-  reviewItem: (userId: string, mode: 'random' | 'oldest') =>
-    post<ReviewResult>('/review_item', { user_id: userId, mode }),
+  reviewItem: (mode: 'random' | 'oldest') =>
+    post<ReviewResult>('/review_item', { mode }),
 
-  markItem: (userId: string, id: number, status: 'done' | 'not_done') =>
-    postVoid('/mark_item', { user_id: userId, id, status }),
+  markItem: (id: number, status: 'done' | 'not_done') =>
+    postVoid('/mark_item', { id, status }),
 
-  inspectWords: (userId: string) =>
-    post<InspectResponse>('/inspect', { user_id: userId }),
+  inspectWords: () =>
+    post<InspectResponse>('/inspect', {}),
 
   replantWord: (id: number) =>
     postVoid('/replant', { id }),

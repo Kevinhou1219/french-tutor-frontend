@@ -52,11 +52,11 @@ export default function MasteredWordsPage({ userId }: Props) {
   const [toastTimer, setToastTimer] = useState<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    api.inspectWords(userId)
+    api.inspectWords()
       .then(res => setItems(res.items))
       .catch(err => setError(err instanceof Error ? err.message : 'Failed to load.'))
       .finally(() => setLoading(false))
-  }, [userId])
+  }, [])
 
   // Cleanup timer on unmount
   useEffect(() => () => { if (toastTimer) clearTimeout(toastTimer) }, [toastTimer])

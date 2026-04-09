@@ -5,11 +5,7 @@ import { sounds } from '../sounds'
 
 const POLL_INTERVAL = 60
 
-interface Props {
-  userId: string
-}
-
-export default function Activity({ userId }: Props) {
+export default function Activity() {
   const [data, setData] = useState<ActivityResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -22,14 +18,14 @@ export default function Activity({ userId }: Props) {
     countdownRef.current = POLL_INTERVAL
     setCountdown(POLL_INTERVAL)
     try {
-      const result = await api.getActivity(userId)
+      const result = await api.getActivity()
       setData(result)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load activity.')
     } finally {
       setLoading(false)
     }
-  }, [userId])
+  }, [])
 
   useEffect(() => {
     fetchActivity()

@@ -178,11 +178,11 @@ export default function MedalsPage({ userId }: Props) {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    Promise.all([api.getDashboard(userId), api.getActivity(userId)])
+    Promise.all([api.getDashboard(), api.getActivity()])
       .then(([dash, act]) => setCategories(buildCategories(dash, act)))
       .catch(err => setError(err instanceof Error ? err.message : 'Failed to load medals.'))
       .finally(() => setLoading(false))
-  }, [userId])
+  }, [])
 
   return (
     <div className={styles.page}>

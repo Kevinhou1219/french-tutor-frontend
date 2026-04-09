@@ -5,13 +5,9 @@ import { sounds } from '../sounds'
 
 const REVIEW_TIMEOUT = 30
 
-interface Props {
-  userId: string
-}
-
 type Phase = 'pick' | 'reviewing' | 'marking'
 
-export default function WaterPlants({ userId }: Props) {
+export default function WaterPlants() {
   const [phase, setPhase] = useState<Phase>('pick')
   const [item, setItem] = useState<ReviewResult | null>(null)
   const [loadingMode, setLoadingMode] = useState<'random' | 'oldest' | null>(null)
@@ -25,7 +21,7 @@ export default function WaterPlants({ userId }: Props) {
     markedRef.current = true
     setPhase('marking')
     try {
-      await api.markItem(userId, item.id, status)
+      await api.markItem(item.id, status)
       sessionStorage.setItem('lastReviewedId', String(item.id))
     } catch {
       // best-effort; return to pick regardless
@@ -33,7 +29,7 @@ export default function WaterPlants({ userId }: Props) {
     setItem(null)
     setPhase('pick')
     setError(null)
-  }, [userId, item])
+  }, [item])
 
   // Auto-dismiss the "no seeds" empty state after 5 seconds
   useEffect(() => {
@@ -65,7 +61,7 @@ export default function WaterPlants({ userId }: Props) {
     setLoadingMode(mode)
     setError(null)
     try {
-      const result = await api.reviewItem(userId, mode)
+      const result = await api.reviewItem(mode)
       setItem(result)
       setPhase('reviewing')
     } catch (err) {
