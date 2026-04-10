@@ -48,6 +48,7 @@ async function postVoid(path: string, body: Record<string, unknown>): Promise<vo
 export interface MeResult {
   user_id: string
   name: string
+  given_name?: string
 }
 
 export interface WordResult {

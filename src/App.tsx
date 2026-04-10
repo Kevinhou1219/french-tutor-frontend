@@ -14,7 +14,7 @@ export default function App() {
 
   useEffect(() => {
     api.getMe()
-      .then(me => setUserName(me.name || me.user_id))
+      .then(me => setUserName(me.given_name || me.name || me.user_id))
       .catch(() => redirectToLogin())
       .finally(() => setLoading(false))
   }, [])
