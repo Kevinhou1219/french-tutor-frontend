@@ -1,4 +1,11 @@
+import { useState } from 'react'
+import { api } from '../api/client'
 import styles from './AboutPage.module.css'
+
+interface Props {
+  displayName: string | null
+  onNameChange: (name: string) => void
+}
 
 interface Section {
   icon: string
@@ -66,7 +73,34 @@ const sections: Section[] = [
   },
 ]
 
-export default function AboutPage() {
+export default function AboutPage({ displayName, onNameChange }: Props) {
+  const [open, setOpen] = useState(false)
+  const [draft, setDraft] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  function handleOpen() {
+    setDraft(displayName ?? '')
+    setError(null)
+    setOpen(true)
+  }
+
+  async function handleSave() {
+    const trimmed = draft.trim()
+    if (!trimmed) return
+    setSaving(true)
+    setError(null)
+    try {
+      await api.updateDisplayName(trimmed)
+      onNameChange(trimmed)
+      setOpen(false)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Try again?')
+    } finally {
+      setSaving(false)
+    }
+  }
+
   return (
     <div className={styles.page}>
       <header className={styles.hero}>
@@ -78,6 +112,37 @@ export default function AboutPage() {
       </header>
 
       <main className={styles.main}>
+        <div className={styles.nameBarWrap}>
+          {!open ? (
+            <button className={styles.nameBarBtn} onClick={handleOpen}>
+              🚜 Change your name
+            </button>
+          ) : (
+            <div className={styles.nameCard}>
+              <span className={styles.nameCardIcon}>🌾</span>
+              <label className={styles.nameCardLabel}>What should we call you around the farm?</label>
+              <input
+                className={styles.nameInput}
+                type="text"
+                maxLength={25}
+                value={draft}
+                onChange={e => setDraft(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleSave()}
+                autoFocus
+              />
+              <span className={styles.nameCharCount}>{draft.length}/25</span>
+              {error && <span className={styles.nameError}>{error}</span>}
+              <div className={styles.nameCardActions}>
+                <button className={styles.nameSaveBtn} onClick={handleSave} disabled={saving || !draft.trim()}>
+                  {saving ? 'Saving…' : 'Looks good 🌱'}
+                </button>
+                <button className={styles.nameCancelBtn} onClick={() => setOpen(false)}>
+                  Never mind
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
         {sections.map(section => (
           <div key={section.title} className={styles.section}>
             <h2 className={styles.sectionTitle}>

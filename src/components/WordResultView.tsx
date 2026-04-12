@@ -10,11 +10,11 @@ export default function WordResultView({ result }: Props) {
   return (
     <div className={styles.container}>
       <Section label="Translation">
-        <p className={styles.primary}><Md text={result.translation} /></p>
+        <p className={styles.primary}><Md text={result.translation ?? ''} /></p>
       </Section>
 
       <Section label="Example">
-        <p className={styles.italic}><Md text={result.example_sentence} /></p>
+        <p className={styles.italic}><Md text={result.example_sentence ?? ''} /></p>
       </Section>
 
       {result.conjugations && (

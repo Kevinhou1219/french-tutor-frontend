@@ -30,7 +30,7 @@ export default function App() {
         <Route path="/seed-shop" element={<SeedShopPage displayName={userName} />} />
         <Route path="/medals" element={<MedalsPage displayName={userName} />} />
         <Route path="/bloom-parade" element={<MasteredWordsPage displayName={userName} />} />
-        <Route path="/about" element={<AboutPage />} />
+        <Route path="/about" element={<AboutPage displayName={userName} onNameChange={setUserName} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

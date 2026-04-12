@@ -54,11 +54,12 @@ export interface MeResult {
 }
 
 export interface WordResult {
-  translation: string
+  valid: boolean
+  translation: string | null
   conjugations: string[] | null
   synonyms: string[] | null
   common_phrases: string[] | null
-  example_sentence: string
+  example_sentence: string | null
 }
 
 export interface SentenceResult {
@@ -146,4 +147,7 @@ export const api = {
 
   replantWord: (id: number) =>
     postVoid('/replant', { id }),
+
+  updateDisplayName: (display_name: string) =>
+    postVoid('/update_display_name', { display_name }),
 }
