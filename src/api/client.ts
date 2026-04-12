@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL
 const FRONTEND_URL = 'https://icy-ocean-093948e10.7.azurestaticapps.net'
 
 export function redirectToLogin() {
-  window.location.href = `${BASE_URL}/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(FRONTEND_URL)}`
+  window.location.href = `${BASE_URL}/.auth/login/google?post_login_redirect_uri=${encodeURIComponent(FRONTEND_URL)}`
 }
 
 async function post<T>(path: string, body: Record<string, unknown>): Promise<T> {
@@ -49,6 +49,8 @@ export interface MeResult {
   user_id: string
   name: string
   given_name?: string
+  display_name?: string
+  preferred_username?: string
 }
 
 export interface WordResult {

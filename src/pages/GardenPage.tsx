@@ -4,10 +4,10 @@ import WaterPlants from '../components/WaterPlants'
 import styles from '../App.module.css'
 
 interface Props {
-  userId: string
+  displayName: string
 }
 
-export default function GardenPage({ userId }: Props) {
+export default function GardenPage({ displayName }: Props) {
   return (
     <div className={styles.page}>
       <header className={styles.hero}>
@@ -21,8 +21,8 @@ export default function GardenPage({ userId }: Props) {
             <div className={styles.flagWhite} />
             <div className={styles.flagRed} />
           </div>
-          <p className={styles.greeting}>Bonjour, {userId}!</p>
-          <h1 className={styles.heroTitle}>{userId}'s French Garden</h1>
+          <p className={styles.greeting}>Bonjour, {displayName}!</p>
+          <h1 className={styles.heroTitle}>{displayName}'s French Garden</h1>
           <p className={styles.heroSubtitle}>
             Every word you look up is a seed you plant 🌱 <br/>Water your plants regularly by reviewing the words.💧 <br/>Your French will flourish 🌸
           </p>

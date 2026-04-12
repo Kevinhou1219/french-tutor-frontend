@@ -6,15 +6,15 @@ import QACard from '../components/QACard'
 import styles from './SeedShopPage.module.css'
 
 interface Props {
-  userId: string
+  displayName: string
 }
 
-export default function SeedShopPage({ userId }: Props) {
+export default function SeedShopPage({ displayName }: Props) {
   return (
     <div className={styles.page}>
       <header className={styles.hero}>
         <div className={styles.heroInner}>
-          <p className={styles.greeting}>Bonjour, {userId}!</p>
+          <p className={styles.greeting}>Bonjour, {displayName}!</p>
           <h1 className={styles.title}>🌿 My Seed Shop</h1>
           <p className={styles.subtitle}>Look up words and sentences to plant new seeds</p>
         </div>

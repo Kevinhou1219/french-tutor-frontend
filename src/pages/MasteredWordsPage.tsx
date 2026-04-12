@@ -4,7 +4,7 @@ import styles from './MasteredWordsPage.module.css'
 import bearImg from '../assets/bear.webp'
 
 interface Props {
-  userId: string
+  displayName: string
 }
 
 // Give each card a stable vertical position and animation timing based on its index.
@@ -43,7 +43,7 @@ function WordCard({ item, cardStyle: cs, replanted, onReplant }: WordCardProps) 
   )
 }
 
-export default function MasteredWordsPage({ userId }: Props) {
+export default function MasteredWordsPage({ displayName }: Props) {
   const [items, setItems] = useState<InspectItem[] | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -86,7 +86,7 @@ export default function MasteredWordsPage({ userId }: Props) {
 
       <header className={styles.hero}>
         <div className={styles.heroInner}>
-          <p className={styles.heroEyebrow}>Bonjour, {userId}!</p>
+          <p className={styles.heroEyebrow}>Bonjour, {displayName}!</p>
           <h1 className={styles.heroTitle}>🌸 Bloom Parade</h1>
           <p className={styles.heroSubtitle}>Words you've mastered, drifting by — double-click any to replant it</p>
         </div>

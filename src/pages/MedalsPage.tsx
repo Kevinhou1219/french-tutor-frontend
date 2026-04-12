@@ -3,7 +3,7 @@ import { api, DashboardResult, ActivityResult } from '../api/client'
 import styles from './MedalsPage.module.css'
 
 interface Props {
-  userId: string
+  displayName: string
 }
 
 // ── Streak logic ───────────────────────────────────────────────────────────
@@ -172,7 +172,7 @@ function MedalCategory({ category }: { category: CategoryDef }) {
 
 // ── Page ───────────────────────────────────────────────────────────────────
 
-export default function MedalsPage({ userId }: Props) {
+export default function MedalsPage({ displayName }: Props) {
   const [categories, setCategories] = useState<CategoryDef[] | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -188,7 +188,7 @@ export default function MedalsPage({ userId }: Props) {
     <div className={styles.page}>
       <header className={styles.hero}>
         <div className={styles.heroInner}>
-          <p className={styles.greeting}>Bonjour, {userId}!</p>
+          <p className={styles.greeting}>Bonjour, {displayName}!</p>
           <h1 className={styles.title}>🏅 Medals & Achievements</h1>
           <p className={styles.subtitle}>Your French learning milestones and awards</p>
         </div>

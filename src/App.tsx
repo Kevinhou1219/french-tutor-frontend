@@ -14,7 +14,7 @@ export default function App() {
 
   useEffect(() => {
     api.getMe()
-      .then(me => setUserName(me.given_name || me.name || me.user_id))
+      .then(me => setUserName(me.display_name || me.preferred_username || me.name || me.user_id))
       .catch(() => redirectToLogin())
       .finally(() => setLoading(false))
   }, [])
@@ -26,10 +26,10 @@ export default function App() {
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route path="/" element={<GardenPage userId={userName} />} />
-        <Route path="/seed-shop" element={<SeedShopPage userId={userName} />} />
-        <Route path="/medals" element={<MedalsPage userId={userName} />} />
-        <Route path="/bloom-parade" element={<MasteredWordsPage userId={userName} />} />
+        <Route path="/" element={<GardenPage displayName={userName} />} />
+        <Route path="/seed-shop" element={<SeedShopPage displayName={userName} />} />
+        <Route path="/medals" element={<MedalsPage displayName={userName} />} />
+        <Route path="/bloom-parade" element={<MasteredWordsPage displayName={userName} />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
