@@ -142,6 +142,9 @@ export const api = {
   markItem: (id: number, status: 'done' | 'not_done') =>
     postVoid('/mark_item', { id, status }),
 
+  translate: (text: string) =>
+    post<{ translation: string }>('/translate', { text }),
+
   inspectWords: () =>
     post<InspectResponse>('/inspect', {}),
 

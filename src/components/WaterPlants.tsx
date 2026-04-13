@@ -4,8 +4,10 @@ import styles from './WaterPlants.module.css'
 import { sounds } from '../sounds'
 
 const REVIEW_TIMEOUT = 30
+const TRANS_TIMEOUT = 3
 
 type Phase = 'pick' | 'reviewing' | 'marking'
+type TransPhase = 'idle' | 'loading' | 'showing'
 
 export default function WaterPlants() {
   const [phase, setPhase] = useState<Phase>('pick')
@@ -15,6 +17,10 @@ export default function WaterPlants() {
   const [countdown, setCountdown] = useState(REVIEW_TIMEOUT)
   const countdownRef = useRef(REVIEW_TIMEOUT)
   const markedRef = useRef(false)
+  const [transPhase, setTransPhase] = useState<TransPhase>('idle')
+  const [transText, setTransText] = useState<string | null>(null)
+  const [transCountdown, setTransCountdown] = useState(TRANS_TIMEOUT)
+  const transCountdownRef = useRef(TRANS_TIMEOUT)
 
   const markItem = useCallback(async (status: 'done' | 'not_done') => {
     if (markedRef.current || !item) return
@@ -56,6 +62,52 @@ export default function WaterPlants() {
 
     return () => clearInterval(tickId)
   }, [phase, markItem])
+
+  // Reset translation state when we leave the reviewing phase
+  useEffect(() => {
+    if (phase !== 'reviewing') {
+      setTransPhase('idle')
+      setTransText(null)
+    }
+  }, [phase])
+
+  // Translation countdown tick
+  useEffect(() => {
+    if (transPhase !== 'showing') return
+    transCountdownRef.current = TRANS_TIMEOUT
+    setTransCountdown(TRANS_TIMEOUT)
+
+    const tickId = setInterval(() => {
+      transCountdownRef.current -= 1
+      setTransCountdown(transCountdownRef.current)
+      if (transCountdownRef.current <= 0) {
+        clearInterval(tickId)
+        setTransPhase('idle')
+        setTransText(null)
+        markItem('not_done')
+      }
+    }, 1000)
+
+    return () => clearInterval(tickId)
+  }, [transPhase, markItem])
+
+  const handleNeedMoreWork = useCallback(async () => {
+    sounds.needWork.play()
+    setTransPhase('loading')
+    try {
+      const result = await api.translate(item!.content)
+      if (markedRef.current) {
+        // 30s timer already fired; don't show stale translation
+        setTransPhase('idle')
+        return
+      }
+      setTransText(result.translation)
+      setTransPhase('showing')
+    } catch {
+      setTransPhase('idle')
+      markItem('not_done')
+    }
+  }, [item, markItem])
 
   async function startReview(mode: 'random' | 'oldest') {
     setLoadingMode(mode)
@@ -134,6 +186,36 @@ export default function WaterPlants() {
 
           <div className={styles.content}>{item.content}</div>
 
+          {transPhase !== 'idle' && (
+            <div className={styles.translationBox}>
+              {transPhase === 'loading' ? (
+                <span className={styles.spinner} aria-label="Translating" />
+              ) : (
+                <>
+                  <div className={styles.translationHeader}>
+                    <p className={styles.translationText}>🌱 {transText}</p>
+                    <button
+                      className={styles.transCloseBtn}
+                      onClick={() => {
+                        setTransPhase('idle')
+                        setTransText(null)
+                        markItem('not_done')
+                      }}
+                      aria-label="Dismiss"
+                    >✕</button>
+                  </div>
+                  <div className={styles.countdownBar} style={{ width: '20%' }}>
+                    <div
+                      className={styles.transCountdownFill}
+                      style={{ width: `${(transCountdown / TRANS_TIMEOUT) * 100}%` }}
+                    />
+                  </div>
+                  <p className={styles.countdownText}>{transCountdown}s</p>
+                </>
+              )}
+            </div>
+          )}
+
           <div className={styles.actions}>
             <button
               className={`${styles.actionBtn} ${styles.masteredBtn}`}
@@ -146,10 +228,10 @@ export default function WaterPlants() {
             </button>
             <button
               className={`${styles.actionBtn} ${styles.needMoreBtn}`}
-              onClick={() => { sounds.needWork.play(); markItem('not_done') }}
-              disabled={phase === 'marking'}
+              onClick={handleNeedMoreWork}
+              disabled={phase === 'marking' || transPhase !== 'idle'}
             >
-              {phase === 'marking'
+              {phase === 'marking' || transPhase === 'loading'
                 ? <span className={styles.spinner} aria-label="Loading" />
                 : '💧 Need More Work'}
             </button>
