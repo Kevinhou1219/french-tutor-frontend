@@ -26,24 +26,30 @@ export default function SeedShopPage({ displayName }: Props) {
             title="Word Lookup 🌱"
             subtitle="Drop in a French word to plant a seed"
             placeholder="e.g. bonjour"
-            buttonLabel="Look up"
+            buttonLabel="AI Search"
+            quickButtonLabel="Quick Search"
             accentColor="#16a34a"
             maxInputLength={30}
             onSubmit={(word) => api.lookupWord(word)}
+            onSubmitQuick={(word) => api.lookupWordQuick(word)}
             renderResult={(result) => <WordResultView result={result} />}
           />
           <LookupCard
             title="Sentence Lookup 🌱"
             subtitle="Drop in a French sentence to plant a seed"
             placeholder="e.g. Comment vous appelez-vous ?"
-            buttonLabel="Translate"
+            buttonLabel="AI Search"
+            quickButtonLabel="Quick Search"
             accentColor="#0f766e"
             maxInputLength={300}
             onSubmit={(sentence) => api.lookupSentence(sentence)}
+            onSubmitQuick={(sentence) => api.lookupSentenceQuick(sentence)}
             renderResult={(result) => <SentenceResultView result={result} />}
           />
+          <div className={styles.fullWidth}>
+            <QACard />
+          </div>
         </div>
-        <QACard />
       </main>
 
       <footer className={styles.footer}>

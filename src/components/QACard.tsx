@@ -40,7 +40,7 @@ export default function QACard() {
       <div className={styles.header}>
         <div>
           <h2 className={styles.title}>Ask Your Gardener 🧑‍🌾</h2>
-          <p className={styles.subtitle}>Ask anything about French — grammar, vocabulary, expressions, and more</p>
+          <p className={styles.subtitle}>Ask me anything about French! Don't be shy, I won't remember any of this 🫣</p>
         </div>
         {(question.length > 0 || answer !== null || error !== null) && (
           <button className={styles.clearBtn} type="button" onClick={handleClear}>

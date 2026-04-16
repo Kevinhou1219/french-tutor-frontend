@@ -13,9 +13,11 @@ export default function WordResultView({ result }: Props) {
         <p className={styles.primary}><Md text={result.translation ?? ''} /></p>
       </Section>
 
-      <Section label="Example">
-        <p className={styles.italic}><Md text={result.example_sentence ?? ''} /></p>
-      </Section>
+      {result.example_sentence && (
+        <Section label="Example">
+          <p className={styles.italic}><Md text={result.example_sentence} /></p>
+        </Section>
+      )}
 
       {result.conjugations && (
         <Section label="Conjugations">

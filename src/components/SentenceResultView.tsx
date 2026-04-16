@@ -13,9 +13,11 @@ export default function SentenceResultView({ result }: Props) {
         <p className={styles.primary}><Md text={result.translation} /></p>
       </Section>
 
-      <Section label="Tense">
-        <p><Md text={result.tense} /></p>
-      </Section>
+      {result.tense && (
+        <Section label="Tense">
+          <p><Md text={result.tense} /></p>
+        </Section>
+      )}
 
       {result.grammar_points && (
         <Section label="Grammar Points">

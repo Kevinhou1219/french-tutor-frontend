@@ -7,9 +7,11 @@ interface Props<T> {
   subtitle: string
   placeholder: string
   buttonLabel: string
+  quickButtonLabel?: string
   accentColor: string
   maxInputLength: number
   onSubmit: (value: string) => Promise<T>
+  onSubmitQuick?: (value: string) => Promise<T>
   renderResult: (result: T) => React.ReactNode
 }
 
@@ -18,15 +20,19 @@ export default function LookupCard<T>({
   subtitle,
   placeholder,
   buttonLabel,
+  quickButtonLabel,
   accentColor,
   maxInputLength,
   onSubmit,
+  onSubmitQuick,
   renderResult,
 }: Props<T>) {
   const [input, setInput] = useState('')
   const [result, setResult] = useState<T | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [loadingMode, setLoadingMode] = useState<'ai' | 'quick' | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+  const loading = loadingMode !== null
 
   function handleClear() {
     setInput('')
@@ -34,8 +40,7 @@ export default function LookupCard<T>({
     setError(null)
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
+  async function runSubmit(submitFn: (value: string) => Promise<T>, mode: 'ai' | 'quick') {
     const trimmed = input.trim()
     if (!trimmed) return
     if (trimmed.length > maxInputLength) {
@@ -44,17 +49,26 @@ export default function LookupCard<T>({
     }
 
     sounds.lookup.play()
-    setLoading(true)
+    setLoadingMode(mode)
     setError(null)
     setResult(null)
 
     try {
-      const data = await onSubmit(trimmed)
+      const data = await submitFn(trimmed)
       setResult(data)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {
-      setLoading(false)
+      setLoadingMode(null)
+    }
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (onSubmitQuick) {
+      await runSubmit(onSubmitQuick, 'quick')
+    } else {
+      await runSubmit(onSubmit, 'ai')
     }
   }
 
@@ -88,12 +102,26 @@ export default function LookupCard<T>({
             disabled={loading}
             autoComplete="off"
           />
+          {onSubmitQuick && quickButtonLabel && (
+            <button
+              className={styles.buttonOutline}
+              type="button"
+              onClick={() => runSubmit(onSubmitQuick, 'quick')}
+              disabled={loading || !input.trim() || input.length > maxInputLength}
+            >
+              {loadingMode === 'quick' ? (
+                <span className={styles.spinnerDark} aria-label="Loading" />
+              ) : (
+                quickButtonLabel
+              )}
+            </button>
+          )}
           <button
             className={styles.button}
             type="submit"
             disabled={loading || !input.trim() || input.length > maxInputLength}
           >
-            {loading ? (
+            {loadingMode === 'ai' ? (
               <span className={styles.spinner} aria-label="Loading" />
             ) : (
               buttonLabel

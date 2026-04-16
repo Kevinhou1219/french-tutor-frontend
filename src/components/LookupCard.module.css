@@ -134,6 +134,38 @@
   cursor: not-allowed;
 }
 
+.buttonOutline {
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5rem;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.buttonOutline:hover:not(:disabled) {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+.buttonOutline:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.buttonOutline:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .spinner {
   display: inline-block;
   width: 1.1em;
@@ -146,6 +178,16 @@
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+.spinnerDark {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  border: 2.5px solid rgba(0, 0, 0, 0.15);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
 }
 
 .error {

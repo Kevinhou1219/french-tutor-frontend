@@ -20,7 +20,14 @@ async function post<T>(path: string, body: Record<string, unknown>): Promise<T> 
 
   if (!res.ok) {
     const text = await res.text().catch(() => '')
-    throw new Error(text || `Request failed: ${res.status} ${res.statusText}`)
+    let message = `Request failed: ${res.status} ${res.statusText}`
+    try {
+      const json = JSON.parse(text)
+      if (json.detail) message = json.detail
+    } catch {
+      if (text) message = text
+    }
+    throw new Error(message)
   }
 
   return res.json() as Promise<T>
@@ -64,7 +71,7 @@ export interface WordResult {
 
 export interface SentenceResult {
   translation: string
-  tense: string
+  tense: string | null
   grammar_points: string | null
   idiomatic_expressions: string | null
 }
@@ -124,8 +131,14 @@ export const api = {
   lookupWord: (word: string) =>
     post<WordResult>('/word', { word }),
 
+  lookupWordQuick: (word: string) =>
+    post<WordResult>('/word_quick', { word }),
+
   lookupSentence: (sentence: string) =>
     post<SentenceResult>('/sentence', { sentence }),
+
+  lookupSentenceQuick: (sentence: string) =>
+    post<SentenceResult>('/sentence_quick', { sentence }),
 
   askQuestion: (question: string) =>
     post<QAResult>('/qa', { question }),
