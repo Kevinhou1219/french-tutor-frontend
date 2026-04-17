@@ -22,8 +22,12 @@ export default function SeedShopPage({ displayName }: Props) {
 
       <main className={styles.main}>
         <div className={styles.grid}>
+          <div className={styles.sectionLabel}>
+            <span className={styles.sectionTitle}>🧑‍🌾 The Diligent Gardener</span>
+            <span className={styles.sectionSubtitle}>Every seed gets planted. Your garden will remember.</span>
+          </div>
           <LookupCard
-            title="Word Lookup 🌱"
+            title="Recherche de mot 🥐"
             subtitle="Drop in a French word to plant a seed"
             placeholder="e.g. bonjour"
             buttonLabel="AI Search"
@@ -35,7 +39,7 @@ export default function SeedShopPage({ displayName }: Props) {
             renderResult={(result) => <WordResultView result={result} />}
           />
           <LookupCard
-            title="Sentence Lookup 🌱"
+            title="Recherche de phrase 🥐"
             subtitle="Drop in a French sentence to plant a seed"
             placeholder="e.g. Comment vous appelez-vous ?"
             buttonLabel="AI Search"
@@ -46,6 +50,30 @@ export default function SeedShopPage({ displayName }: Props) {
             onSubmitQuick={(sentence) => api.lookupSentenceQuick(sentence)}
             renderResult={(result) => <SentenceResultView result={result} />}
           />
+          <LookupCard
+            title="Word Lookup 🫖"
+            subtitle="Drop in an English word to plant a French seed"
+            placeholder="e.g. hello"
+            buttonLabel="Quick Search"
+            accentColor="#16a34a"
+            maxInputLength={30}
+            onSubmit={(word) => api.lookupWordEnQuick(word)}
+            renderResult={(result) => <WordResultView result={result} />}
+          />
+          <LookupCard
+            title="Sentence Lookup 🫖"
+            subtitle="Drop in an English sentence to plant a French seed"
+            placeholder="e.g. How are you?"
+            buttonLabel="Quick Search"
+            accentColor="#0f766e"
+            maxInputLength={300}
+            onSubmit={(sentence) => api.lookupSentenceEnQuick(sentence)}
+            renderResult={(result) => <SentenceResultView result={result} />}
+          />
+          <div className={styles.sectionLabel}>
+            <span className={styles.sectionTitle}>🍷 The Tipsy Gardener</span>
+            <span className={styles.sectionSubtitle}>Brilliant conversationalist. Absolutely no recollection by morning.</span>
+          </div>
           <div className={styles.fullWidth}>
             <QACard />
           </div>

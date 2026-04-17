@@ -140,6 +140,12 @@ export const api = {
   lookupSentenceQuick: (sentence: string) =>
     post<SentenceResult>('/sentence_quick', { sentence }),
 
+  lookupWordEnQuick: (word: string) =>
+    post<WordResult>('/word_en_quick', { word }),
+
+  lookupSentenceEnQuick: (sentence: string) =>
+    post<SentenceResult>('/sentence_en_quick', { sentence }),
+
   askQuestion: (question: string) =>
     post<QAResult>('/qa', { question }),
 
