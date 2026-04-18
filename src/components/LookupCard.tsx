@@ -118,7 +118,8 @@ export default function LookupCard<T>({
           )}
           <button
             className={styles.button}
-            type="submit"
+            type="button"
+            onClick={() => runSubmit(onSubmit, 'ai')}
             disabled={loading || !input.trim() || input.length > maxInputLength}
           >
             {loadingMode === 'ai' ? (
