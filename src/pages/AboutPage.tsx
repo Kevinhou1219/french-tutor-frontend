@@ -51,7 +51,7 @@ const sections: Section[] = [
     title: 'The Bloom Parade — Revisiting Your Flowers',
     body: [
       "Just because a flower has bloomed doesn't mean it can never fade. Language is a living thing. If you don't visit your blooms occasionally, they can quietly slip away.",
-      "The Bloom Parade is your gallery of mastered words, drifting gently across the screen. If you spot one that has grown a little fuzzy, double-click it to replant it. It heads back into your garden for another round of watering. No shame... Even the best gardeners replant.",
+      "The Bloom Parade is your gallery of mastered words, arranged in columns for you to scroll through. If you spot one that has grown a little fuzzy, double-click it to replant it. It heads back into your garden for another round of watering. No shame... Even the best gardeners replant.",
     ],
   },
   {

@@ -48,19 +48,32 @@
   margin: 0;
 }
 
-/* ── Flying word cards ────────────────────────────────────────────── */
+/* ── Three-column word parade ─────────────────────────────────────── */
 .scene {
-  position: relative;
   width: 100%;
+  padding: 2rem 2rem 5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.column {
   flex: 1;
-  min-height: 400px;
-  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .scene {
+    flex-direction: column;
+  }
 }
 
 .card {
-  position: absolute;
-  /* start off-screen right; animation drives the horizontal travel */
-  left: 0;
+  position: relative;
   background: #ffffff;
   border: 2px solid #4caf50;
   border-radius: 14px;
@@ -72,17 +85,22 @@
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
-  animation: flyAcross linear infinite;
-  transition: box-shadow 0.2s, transform 0.15s;
   display: flex;
   align-items: center;
   gap: 8px;
-  z-index: 5;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s;
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  animation-play-state: paused;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 /* Replanted state */
@@ -92,19 +110,13 @@
   color: #1b5e20 !important;
   cursor: not-allowed;
   pointer-events: none;
-  opacity: 0.75;
+  opacity: 0.75 !important;
 }
 
 .replantedBadge {
   font-size: 12px;
   font-weight: 600;
   opacity: 0.85;
-}
-
-/* Horizontal flight — left=0 as anchor; from off-screen right to off-screen left */
-@keyframes flyAcross {
-  from { transform: translateX(110vw); }
-  to   { transform: translateX(-55vw); }
 }
 
 /* ── Bear ─────────────────────────────────────────────────────────── */

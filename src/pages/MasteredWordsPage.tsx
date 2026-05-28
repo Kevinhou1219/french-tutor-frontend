@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react'
 import { api, InspectItem } from '../api/client'
 import styles from './MasteredWordsPage.module.css'
 import bearImg from '../assets/bear.webp'
@@ -7,35 +7,33 @@ interface Props {
   displayName: string
 }
 
-// Give each card a stable vertical position and animation timing based on its index.
-// Using irrational-number spacing to avoid visual patterns.
-function buildCardStyle(index: number): React.CSSProperties {
-  const frac = (index * 0.618033988) % 1  // golden-ratio sequence
-  const top = 8 + frac * 72              // 8 % – 80 % from top
-  const duration = 70 + (index % 7) * 3.5 // 70 s – 91 s per cycle
-  // negative delay puts the card at a different point in its cycle on load
-  const delay = -((index * 2.414) % duration)
-  return {
-    top: `${top}%`,
-    animationDuration: `${duration}s`,
-    animationDelay: `${delay}s`,
-  }
-}
-
 interface WordCardProps {
   item: InspectItem
-  cardStyle: React.CSSProperties
   replanted: boolean
   onReplant: (id: number) => void
 }
 
-function WordCard({ item, cardStyle: cs, replanted, onReplant }: WordCardProps) {
+function WordCard({ item, replanted, onReplant }: WordCardProps) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect() } },
+      { threshold: 0.15 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   return (
     <div
-      className={`${styles.card} ${replanted ? styles.replanted : ''}`}
-      style={cs}
+      ref={ref}
+      className={`${styles.card} ${replanted ? styles.replanted : ''} ${visible ? styles.visible : ''}`}
       onDoubleClick={replanted ? undefined : () => onReplant(item.id)}
-      title={replanted ? 'Replanted!' : 'Click to replant this word'}
+      title={replanted ? 'Replanted!' : 'Double-click to replant this word'}
     >
       {item.content}
       {replanted && <span className={styles.replantedBadge}>🌱 replanted</span>}
@@ -58,8 +56,17 @@ export default function MasteredWordsPage({ displayName }: Props) {
       .finally(() => setLoading(false))
   }, [])
 
-  // Cleanup timer on unmount
   useEffect(() => () => { if (toastTimer) clearTimeout(toastTimer) }, [toastTimer])
+
+  const columns = useMemo<[InspectItem[], InspectItem[], InspectItem[]]>(() => {
+    if (!items) return [[], [], []]
+    const shuffled = [...items].sort(() => Math.random() - 0.5)
+    return [
+      shuffled.filter((_, i) => i % 3 === 0),
+      shuffled.filter((_, i) => i % 3 === 1),
+      shuffled.filter((_, i) => i % 3 === 2),
+    ]
+  }, [items])
 
   const handleReplant = useCallback(async (id: number) => {
     try {
@@ -88,7 +95,7 @@ export default function MasteredWordsPage({ displayName }: Props) {
         <div className={styles.heroInner}>
           <p className={styles.heroEyebrow}>Bonjour, {displayName}!</p>
           <h1 className={styles.heroTitle}>🌸 Bloom Parade</h1>
-          <p className={styles.heroSubtitle}>Words you've mastered, drifting by — double-click any to replant it</p>
+          <p className={styles.heroSubtitle}>Words you've mastered — scroll down and double-click any to replant it</p>
         </div>
       </header>
 
@@ -107,16 +114,18 @@ export default function MasteredWordsPage({ displayName }: Props) {
 
       {items && items.length >= 5 && (
         <div className={styles.scene}>
-          {items.map((item, i) => (
-            <WordCard
-              key={item.id}
-              item={item}
-              cardStyle={buildCardStyle(i)}
-              replanted={replanted.has(item.id)}
-              onReplant={handleReplant}
-            />
+          {columns.map((col, ci) => (
+            <div key={ci} className={styles.column}>
+              {col.map(item => (
+                <WordCard
+                  key={item.id}
+                  item={item}
+                  replanted={replanted.has(item.id)}
+                  onReplant={handleReplant}
+                />
+              ))}
+            </div>
           ))}
-
         </div>
       )}
 
